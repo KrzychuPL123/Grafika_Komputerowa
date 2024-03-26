@@ -34,7 +34,7 @@ function MatrixMul(a,b) //Mnożenie macierzy
 
 function startGL() 
 {
-  alert("StartGL");
+  //alert("StartGL");
   let canvas = document.getElementById("canvas3D"); //wyszukanie obiektu w strukturze strony 
   gl = canvas.getContext("experimental-webgl"); //pobranie kontekstu OpenGL'u z obiektu canvas
   gl.viewportWidth = canvas.width; //przypisanie wybranej przez nas rozdzielczości do systemu OpenGL
@@ -86,7 +86,6 @@ function startGL()
 
   let tab = Array(10).fill().map(() => Array(10).fill(0));
   tab[6][1] = 1;
-  tab[7][1] = 1;
   tab[8][1] = 1;
   tab[2][2] = 1;
   tab[3][2] = 1;
@@ -95,42 +94,97 @@ function startGL()
   tab[2][3] = 1;
   tab[6][3] = 1;
   tab[7][3] = 1;
+  tab[7][4] = 1;
+  tab[8][4] = 1;
+  tab[9][4] = 1;
+  tab[7][5] = 1;
+  tab[8][7] = 1;
+  tab[6][7] = 1;
+  tab[7][7] = 1;
+  tab[5][7] = 1;
+  tab[4][7] = 1;
+  tab[2][7] = 1;
+  tab[2][8] = 1;
+  tab[2][6] = 1;
+  tab[2][5] = 1;
+  tab[3][5] = 1;
+  tab[4][5] = 1;
+  tab[6][5] = 1;
+  tab[4][4] = 1;
 
   let wallsCounter = 0;
   
   for(i = 0; i < 10; i++){
     for(j = 0; j < 10; j++){
-      if(tab[i][j] === 1 || i==0 || (i==9 && j!=6) || (j==0 && i!=5) || j==9){
-        vertexPosition.push(i+0.5);
-        vertexPosition.push(j-0.5);
-        vertexPosition.push(+0.5);
+      if(tab[i][j] === 1 || i==0 || (i==9 && j!=5) || (j==0 && i!=5) || j==9){
 
-        vertexPosition.push(i+0.5);
-        vertexPosition.push(j+0.5);
-        vertexPosition.push(+0.5);
+        vertexPosition.push(i+0.5, j-0.5, +0.5,
+                            i+0.5, j+0.5, +0.5, 
+                            i-0.5, j-0.5, +0.5,
+                            i-0.5, j+0.5, +0.5,
+                            i-0.5, j-0.5, +0.5,
+                            i+0.5, j+0.5, +0.5);
 
-        vertexPosition.push(i-0.5);
-        vertexPosition.push(j-0.5);
-        vertexPosition.push(+0.5);
-
-        vertexPosition.push(i-0.5);
-        vertexPosition.push(j+0.5);
-        vertexPosition.push(+0.5);
-
-        vertexPosition.push(i-0.5);
-        vertexPosition.push(j-0.5);
-        vertexPosition.push(+0.5);
-
-        vertexPosition.push(i+0.5);
-        vertexPosition.push(j+0.5);
-        vertexPosition.push(+0.5);
-
-        for(g = 0; g < 6; g++){
-          vertexColor.push(1.0, 0.5, 0.0);
+        for(g = 1; g < 7; g++){
+          vertexColor.push(1.0/g, 3/g, 3*g);
         }
 
-        wallsCounter++;
-        wallsCounter++;
+        vertexPosition.push(i+0.5, j-0.5, -0.5,
+                            i+0.5, j+0.5, -0.5, 
+                            i-0.5, j-0.5, -0.5,
+                            i-0.5, j+0.5, -0.5,
+                            i-0.5, j-0.5, -0.5,
+                            i+0.5, j+0.5, -0.5); 
+
+        for(g = 1; g < 7; g++){
+          vertexColor.push(1.0/g, 6/g, 2*g);
+        }
+
+        vertexPosition.push(i-0.5, j-0.5, +0.5,
+                            i-0.5, j+0.5, +0.5, 
+                            i-0.5, j-0.5, -0.5,
+                            i-0.5, j-0.5, -0.5,
+                            i-0.5, j+0.5, +0.5, 
+                            i-0.5, j+0.5, -0.5,); 
+
+        for(g = 1; g < 7; g++){
+          vertexColor.push(8/g, 2/g, 2*g);
+        }
+                  
+        vertexPosition.push(i+0.5, j-0.5, +0.5,
+                            i+0.5, j+0.5, +0.5, 
+                            i+0.5, j-0.5, -0.5,
+                            i+0.5, j-0.5, -0.5,
+                            i+0.5, j+0.5, +0.5, 
+                            i+0.5, j+0.5, -0.5,); 
+
+        for(g = 1; g < 7; g++){
+          vertexColor.push(1.0/g, 2/g, 10*g);
+        }
+
+        vertexPosition.push(i+0.5, j-0.5, +0.5,
+                            i-0.5, j-0.5, +0.5, 
+                            i-0.5, j-0.5, -0.5,
+                            i-0.5, j-0.5, -0.5,
+                            i+0.5, j-0.5, +0.5, 
+                            i+0.5, j-0.5, -0.5,); 
+
+        for(g = 1; g < 7; g++){
+          vertexColor.push(1.0/g, 1/g, 2*g);
+        }
+
+        vertexPosition.push(i+0.5, j+0.5, +0.5,
+                            i-0.5, j+0.5, +0.5, 
+                            i-0.5, j+0.5, -0.5,
+                            i-0.5, j+0.5, -0.5,
+                            i+0.5, j+0.5, +0.5, 
+                            i+0.5, j+0.5, -0.5,); 
+         
+        for(g = 1; g < 7; g++){
+          vertexColor.push(3/g, 1/g, 0.5*g);
+        }
+
+        wallsCounter+=12;
       }
     }
   }
@@ -157,8 +211,8 @@ function startGL()
   uPMatrix = [
    1.0/(aspect*Math.tan(fov/2)),0                           ,0                         ,0                            ,
    0                         ,1.0/(Math.tan(fov/2))         ,0                         ,0                            ,
-   0                         ,0                           ,-(zFar+zNear)/(zFar-zNear)  , -1,
-   0                         ,0                           ,-(2*zFar*zNear)/(zFar-zNear) ,0.0,
+   0                       ,0                           ,-(zFar+zNear)/(zFar-zNear)  , -1,
+   0                        ,0                           ,-(2*zFar*zNear)/(zFar-zNear) ,0.0,
   ];
   Tick();
 } 
@@ -166,13 +220,22 @@ function startGL()
 //let angle = 45.0; //Macierz transformacji świata - określenie położenia kamery
 
 var angleZ = 0.0;
-var angleY = 0.0;
-var angleX = 0.0;
-var tz = -20.0;
+var angleY = 0;
+var angleX =  -90;
+var tz = 0;
+var ty = 10;
+var tx = -5;
 
 function Tick()
 {  
   let uMVMatrix = [
+  1,0,0,0, //Macierz jednostkowa
+  0,1,0,0,
+  0,0,1,0,
+  0,0,0,1
+  ];
+
+  let uPVMatrix = [
   1,0,0,0, //Macierz jednostkowa
   0,1,0,0,
   0,0,1,0,
@@ -204,12 +267,19 @@ function Tick()
   1,0,0,0,
   0,1,0,0,
   0,0,1,0,
-  -5,-5,tz,1
+  tx,ty,tz,1
   ];
 
+  /*
   uMVMatrix = MatrixMul(uMVMatrix,uMVRotX);
   uMVMatrix = MatrixMul(uMVMatrix,uMVRotY);
   uMVMatrix = MatrixMul(uMVMatrix,uMVRotZ);
+  */
+
+  uPMatrix = MatrixMul(uMVRotX,uPMatrix);
+  uPMatrix = MatrixMul(uMVRotY,uPMatrix);
+  uPMatrix = MatrixMul(uMVRotZ,uPMatrix);
+  
   uMVMatrix = MatrixMul(uMVMatrix,uMVTranslateZ);
   //alert(uPMatrix);
   
@@ -237,15 +307,18 @@ function Tick()
   gl.drawArrays(gl.TRIANGLES, 0, vertexPositionBuffer.numItems*vertexPositionBuffer.itemSize); //Faktyczne wywołanie rendrowania
    
   setTimeout(Tick,100);
+  angleZ = 0.0;
+  angleY = 0;
+  angleX =  0;
 }
 function handlekeydown(e)
 {
- if(e.keyCode==87) angleX=angleX+1.0; //W
- if(e.keyCode==83) angleX=angleX-1.0; //S
- if(e.keyCode==68) angleY=angleY+1.0;
- if(e.keyCode==65) angleY=angleY-1.0;
- if(e.keyCode==81) angleZ=angleZ+1.0;
- if(e.keyCode==69) angleZ=angleZ-1.0;
+ if(e.keyCode==73) ty=ty-0.3; //W
+ if(e.keyCode==75) ty=ty+0.3; //S
+ if(e.keyCode==76) tx=tx-0.3;
+ if(e.keyCode==74) tx=tx+0.3;
+ if(e.keyCode==65) angleZ-=45;
+ if(e.keyCode==68) angleZ+=45;
  //alert(e.keyCode);
  //alert(angleX);
 }
