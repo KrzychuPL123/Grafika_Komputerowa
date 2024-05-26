@@ -175,13 +175,19 @@ function CreateBox(x,y,z,dx,dy,dz)
   let vertexPosition = []; //3 punkty po 3 składowe - X1,Y1,Z1, X2,Y2,Z2, X3,Y3,Z3 - 1 trójkąt
   let vertexNormal = [];
   
-  vertexPosition.push(...createRect(-1,-1,-1,0,2,0,2,0,0));
-  vertexPosition.push(...createRect(-1,-1,-1,0,0,2,0,2,0));
-  vertexPosition.push(...createRect(-1,-1,-1,2,0,0,0,0,2));
+  tempdx = dx/2;
+  tempdy = dy/2;
+  tempdz = dz/2;
+
+  vertexPosition.push(...createRect(x-tempdx,y-tempdy,z-tempdz,    dx,0,0,    0,dy,0));
+  vertexPosition.push(...createRect(x-tempdx,y-tempdy,z-tempdz,    0,dy,0,    0,0,dz));
+  vertexPosition.push(...createRect(x-tempdx,y-tempdy,z-tempdz,    0,0,dz,    dx,0,0));
+
+  vertexPosition.push(...createRect(x+tempdx,y+tempdy,z+tempdz,   0,-dy,0,   -dx,0,0));
+  vertexPosition.push(...createRect(x+tempdx,y+tempdy,z+tempdz,   0,0,-dz,   0,-dy,0));
+  vertexPosition.push(...createRect(x+tempdx,y+tempdy,z+tempdz,   -dx,0,0,   0,0,-dz));
   
-  vertexPosition.push(...createRect(1,1,1,-2,0,0,0,-2,0));
-  vertexPosition.push(...createRect(1,1,1,0,-2,0,0,0,-2));
-  vertexPosition.push(...createRect(1,1,1,0,0,-2,-2,0,0));
+
   //
   for(let i=0;i<vertexPosition.length;i=i+9)
   {
@@ -260,7 +266,7 @@ function startGL()
   let vertexNormal;
   
   //[vertexPosition, vertexColor, vertexCoords, vertexNormal] = CreateShpere(0,0,0,2, 6, 12); 
-  [vertexPosition, vertexNormal] = CreateBox(0,0,0,1,1,1);
+  [vertexPosition, vertexNormal] = CreateBox(0,0,0,2,2,2 );
   
   vertexPositionBuffer = gl.createBuffer(); //Stworzenie tablicy w pamieci karty graficznej
   gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
@@ -294,11 +300,31 @@ var angleY = 0.0;
 var angleX = 0.0;
 var KameraPositionZ = -8.0;
 
+//swiatlo
+
+var LightSize = 0.1;
+
+var LightPositionX = 0;
+var LightPositionY = 0;
+var LightPositionZ = 3;
+
+//pierwsze ramie
+
 var Object1PositionX = 0.0;
 var Object1PositionY = 0.0;
 var Object1PositionZ = 0.0;
 
 var Object1AngleZ = 0.0;
+
+var Object1Sizedx = 1.0;
+var Object1Sizedy = 0.2;
+var Object1Sizedz = 0.1;
+var Object2Sizedx = 1.0;
+var Object2Sizedy = 0.2;
+var Object2Sizedz = 0.1;
+var Object3Sizedx = 0.4;
+var Object3Sizedy = 0.2;
+var Object3Sizedz = 0.1;
 
 var Object2PositionX = 1.0;
 var Object2PositionY = 0.0;
@@ -312,21 +338,28 @@ var Object3PositionZ = 0.0;
 
 var Object3AngleZ = 0.0;
 
-var LightSize = 0.1;
-var Object1Sizedx = 1.0;
-var Object1Sizedy = 0.2;
-var Object1Sizedz = 0.1;
-var Object2Sizedx = 1.0;
-var Object2Sizedy = 0.2;
-var Object2Sizedz = 0.1;
-var Object3Sizedx = 0.4;
-var Object3Sizedy = 0.2;
-var Object3Sizedz = 0.1;
+//drugie ramie
+var Object4Sizedx = 1.0;
+var Object4Sizedy = 0.2;
+var Object4Sizedz = 0.1;
+var Object5Sizedx = 1.0;
+var Object5Sizedy = 0.2;
+var Object5izedz = 0.1;
+var Object6Sizedx = 0.4;
+var Object6Sizedy = 0.2;
+var Object6Sizedz = 0.1;
 
-var LightPositionX = 0;
-var LightPositionY = 0;
-var LightPositionZ = 3;
+var Object2PositionX = 1.0;
+var Object2PositionY = 0.0;
+var Object2PositionZ = 0.0;
 
+var Object2AngleZ = 0.0;
+
+var Object3PositionX = 1.0;
+var Object3PositionY = 0.0;
+var Object3PositionZ = 0.0;
+
+var Object3AngleZ = 0.0;
 
 function Tick()
 { 
@@ -387,7 +420,7 @@ function Tick()
   
   gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "uPMatrix"), false, new Float32Array(uPMatrix)); //Wgranie macierzy kamery do pamięci karty graficznej
   gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "uVMatrix"), false, new Float32Array(uVMatrix));
-  gl.uniform1f(gl.getUniformLocation(shaderProgram, "uNormalMul"),1.0);
+  gl.uniform1f(gl.getUniformLocation(shaderProgram, "uNormalMul"),-1.0);
   
   
   gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "uMMatrix"), false, new Float32Array(uMMatrix1));
@@ -421,7 +454,7 @@ function Tick()
   gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "uMMatrix"), false, new Float32Array(uMMatrix0));
   gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "uInvMMatrix"), false, new Float32Array(MatrixTransposeInverse(uMMatrix0)));
   gl.uniform3f(gl.getUniformLocation(shaderProgram, "uColor"),1.0,1.0,0.0);
-  gl.uniform1f(gl.getUniformLocation(shaderProgram, "uNormalMul"),-1.0);  
+  gl.uniform1f(gl.getUniformLocation(shaderProgram, "uNormalMul"),1.0);  
   gl.drawArrays(gl.TRIANGLES, 0, vertexPositionBuffer.numItems*vertexPositionBuffer.itemSize); //Faktyczne wywołanie rendrowania
   
   setTimeout(Tick,100);
