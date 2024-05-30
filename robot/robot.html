@@ -298,8 +298,10 @@ function startGL()
 
 var angleZ = 270.0;
 var angleY = 0.0;
-var angleX = 90.0;
-var KameraPositionZ = -12.0;
+var angleX = 150.0;
+var KameraPositionZ = -20.0;
+var KameraPositionX = 0.0;
+var KameraPositionY = 2.0;
 
 //swiatlo
 
@@ -482,7 +484,7 @@ function Tick()
   uVMatrix = MatrixMul(uVMatrix,CreateRotationXMatrix(angleX));
   uVMatrix = MatrixMul(uVMatrix,CreateRotationYMatrix(angleY));
   uVMatrix = MatrixMul(uVMatrix,CreateRotationZMatrix(angleZ));
-  uVMatrix = MatrixMul(uVMatrix,CreateTranslationMatrix(0,2,KameraPositionZ));
+  uVMatrix = MatrixMul(uVMatrix,CreateTranslationMatrix(KameraPositionX,KameraPositionY,KameraPositionZ));
   
   uMMatrix1 = MatrixMul(uMMatrix1,CreateScaleMatrix(Object1Sizedx,Object1Sizedy,Object1Sizedz));
   uMMatrix1 = MatrixMul(uMMatrix1,CreateTranslationMatrix(Object1Sizedx,0.0,0.0)); 
@@ -734,54 +736,71 @@ function Tick()
 function handlekeydown(e)
 {
  // Q W E A S D
- if(e.keyCode==87) angleX=angleX+1.0; //W
- if(e.keyCode==83) angleX=angleX-1.0; //S
- if(e.keyCode==68) angleY=angleY+1.0;
- if(e.keyCode==65) angleY=angleY-1.0;
+ if(e.keyCode==87) angleY=angleY+1.0; //W
+ if(e.keyCode==83) angleY=angleY-1.0; //S
+ if(e.keyCode==68) angleX=angleX+1.0;
+ if(e.keyCode==65) angleX=angleX-1.0;
  if(e.keyCode==81) angleZ=angleZ+1.0;
  if(e.keyCode==69) angleZ=angleZ-1.0;
+
+ if(e.keyCode==37) KameraPositionX ++;
+ if(e.keyCode==38) KameraPositionZ ++;
+ if(e.keyCode==39) KameraPositionX --;
+ if(e.keyCode==40) KameraPositionZ --;
  //alert(e.keyCode);
  //alert(angleX);
  
  //U I O J K L
- if(e.keyCode==76) LightPositionX=LightPositionX+0.1;
- if(e.keyCode==74) LightPositionX=LightPositionX-0.1;
- if(e.keyCode==73) LightPositionY=LightPositionY+0.1;
- if(e.keyCode==75) LightPositionY=LightPositionY-0.1;
+ if(e.keyCode==76) LightPositionY=LightPositionY-0.1;
+ if(e.keyCode==74) LightPositionY=LightPositionY+0.1;
+ if(e.keyCode==73) LightPositionX=LightPositionX-0.1;
+ if(e.keyCode==75) LightPositionX=LightPositionX+0.1;
  if(e.keyCode==85) LightPositionZ=LightPositionZ+0.1;
  if(e.keyCode==79) LightPositionZ=LightPositionZ-0.1;
  
  //Z X
- //do tylu Z
+ //do tylu X
  if(e.keyCode==88) {
 
   if(step == true){
-    Object1AngleZ=Object1AngleZ-1;
-    Object2AngleZ=Object2AngleZ-2;
-    Object4AngleZ=Object4AngleZ+1;
+    Object1AngleZ=Object1AngleZ-2;
+    if(Object2AngleZ>0){
+        Object2AngleZ=Object2AngleZ-2;
+    }
+    Object4AngleZ=Object4AngleZ+2;
     Object5AngleZ=Object5AngleZ+2;
+    
 
-    Object9AngleZ=Object9AngleZ+1;
-    Object10AngleZ=Object10AngleZ+2;
-    Object11AngleZ=Object11AngleZ-1;
+    Object9AngleZ=Object9AngleZ+4;
+    if(Object10AngleZ<0){
+        Object10AngleZ=Object10AngleZ+2;
+    }
+    Object11AngleZ=Object11AngleZ-4;    
     Object12AngleZ=Object12AngleZ-2;
-  }
+    
+}
   else{
-    Object1AngleZ=Object1AngleZ+1;
+    Object1AngleZ=Object1AngleZ+2;
     Object2AngleZ=Object2AngleZ+2;
-    Object4AngleZ=Object4AngleZ-1;
-    Object5AngleZ=Object5AngleZ-2;
 
-    Object9AngleZ=Object9AngleZ-1;
+    Object4AngleZ=Object4AngleZ-2;
+    if(Object5AngleZ>0){
+        Object5AngleZ=Object5AngleZ-2;
+    }
+
+    Object9AngleZ=Object9AngleZ-4;
     Object10AngleZ=Object10AngleZ-2;
-    Object11AngleZ=Object11AngleZ+1;
-    Object12AngleZ=Object12AngleZ+2;
-  }
+    
+    Object11AngleZ=Object11AngleZ+4; 
+    if(Object12AngleZ<0){
+        Object12AngleZ=Object12AngleZ+2;
+    }  
+}
 
-  if(Object2AngleZ > 25){
+  if(Object11AngleZ > 25){
     step = true;
   }
-  else if(Object2AngleZ < -25){
+  else if(Object9AngleZ > 25 ){
     step = false;
   }
 
@@ -793,37 +812,55 @@ function handlekeydown(e)
   Object11PositionY = Object11PositionY+0.1;
   Object13PositionY = Object13PositionY+0.1;
 
+  LightPositionY = LightPositionY+0.1;
+
  }
 
- //do przodu X
+ //do przodu Z
   if(e.keyCode==90) {
     if(step == true){
-      Object1AngleZ=Object1AngleZ+1;
-      Object2AngleZ=Object2AngleZ+2;
-      Object4AngleZ=Object4AngleZ-1;
-      Object5AngleZ=Object5AngleZ-2;
 
-      Object9AngleZ=Object9AngleZ-1;
+
+            
+      Object1AngleZ=Object1AngleZ+2;
+      Object2AngleZ=Object2AngleZ+2;
+      Object4AngleZ=Object4AngleZ-2;
+      if(Object5AngleZ>0){
+        Object5AngleZ=Object5AngleZ-2;
+      }
+
+
+    Object9AngleZ=Object9AngleZ-4;
     Object10AngleZ=Object10AngleZ-2;
-    Object11AngleZ=Object11AngleZ+1;
+     
+    
+        Object11AngleZ=Object11AngleZ+4;
+    if(Object12AngleZ<0){
     Object12AngleZ=Object12AngleZ+2;
-    }
+    }    
+}
     else{
-      Object1AngleZ=Object1AngleZ-1;
-      Object2AngleZ=Object2AngleZ-2;
-      Object4AngleZ=Object4AngleZ+1;
+    
+      Object1AngleZ=Object1AngleZ-2;
+      if(Object2AngleZ>0){  
+        Object2AngleZ=Object2AngleZ-2;
+      }
+      Object4AngleZ=Object4AngleZ+2;
       Object5AngleZ=Object5AngleZ+2;
 
-    Object9AngleZ=Object9AngleZ+1;
-    Object10AngleZ=Object10AngleZ+2;
-    Object11AngleZ=Object11AngleZ-1;
-    Object12AngleZ=Object12AngleZ-2;
+    Object9AngleZ=Object9AngleZ+4;
+    if(Object10AngleZ<0){
+        Object10AngleZ=Object10AngleZ+2;
     }
-
-    if(Object5AngleZ > 25){
+        Object11AngleZ=Object11AngleZ-4;
+    
+        Object12AngleZ=Object12AngleZ-2;
+    
+    }
+    if(Object9AngleZ > 25){
     step = true;
   }
-  else if(Object5AngleZ < -25){
+  else if(Object11AngleZ > 25){
     step = false;
   } 
 
@@ -835,6 +872,8 @@ function handlekeydown(e)
   Object11PositionY = Object11PositionY-0.1;
   Object13PositionY = Object13PositionY-0.1;
 
+  LightPositionY = LightPositionY-0.1;
+
 
   }
 
@@ -843,5 +882,9 @@ function handlekeydown(e)
 </head>
 <body onload="startGL()" onkeydown="handlekeydown(event)">
 <canvas id="canvas3D" width="640" height="480" style="border: solid black 1px"></canvas>
+<div>X - przód, Z - tył</div>
+<div>OWEASD - obrót kamery</div>
+<div>Strzałki - pozycja kamery</div>
+<div>UIOJKL- pozycja swiatla</div>
 </body>
 </html>
