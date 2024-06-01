@@ -636,7 +636,7 @@ function Tick()
   gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "uVMatrix"), false, new Float32Array(uVMatrix));
   gl.uniform1f(gl.getUniformLocation(shaderProgram, "uNormalMul"),-1.0);
 
-  //Pierwszy obiekt
+  //Pierwszy obiekt (prawie ramie)
   gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "uMMatrix"), false, new Float32Array(uMMatrix1));
   gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "uInvMMatrix"), false, new Float32Array(MatrixTransposeInverse(uMMatrix1)));
  
@@ -649,13 +649,13 @@ function Tick()
   gl.vertexAttribPointer(gl.getAttribLocation(shaderProgram, "aVertexNormal"), vertexNormalBuffer.itemSize, gl.FLOAT, false, 0, 0);
   
   gl.uniform3f(gl.getUniformLocation(shaderProgram, "uLightPosition"),LightPositionX,LightPositionY,LightPositionZ);
-  gl.uniform3f(gl.getUniformLocation(shaderProgram, "uColor"),0.5,0.5,0.0); 
+  gl.uniform3f(gl.getUniformLocation(shaderProgram, "uColor"),0.0,0.0,0.0); 
   gl.drawArrays(gl.TRIANGLES, 0, vertexPositionBuffer.numItems*vertexPositionBuffer.itemSize); //Faktyczne wywołanie rendrowania
   
-  //Drugi Obiekt
+  //Drugi Obiekt (prawa reka)
   gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "uMMatrix"), false, new Float32Array(uMMatrix2));
   gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "uInvMMatrix"), false, new Float32Array(MatrixTransposeInverse(uMMatrix2)));
-  gl.uniform3f(gl.getUniformLocation(shaderProgram, "uColor"),0.0,1.0,0.0);
+  gl.uniform3f(gl.getUniformLocation(shaderProgram, "uColor"),1.0,1.0,1.0);
   gl.drawArrays(gl.TRIANGLES, 0, vertexPositionBuffer.numItems*vertexPositionBuffer.itemSize); //Faktyczne wywołanie rendrowania
   
   // //Trzeci Obiekt
@@ -665,16 +665,16 @@ function Tick()
   // gl.drawArrays(gl.TRIANGLES, 0, vertexPositionBuffer.numItems*vertexPositionBuffer.itemSize); //Faktyczne wywołanie rendrowania
   
  
-  //Czwart obiekt (druga reka)
+  //Czwarty obiekt (lewe ramie)
   gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "uMMatrix"), false, new Float32Array(uMMatrix4));
   gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "uInvMMatrix"), false, new Float32Array(MatrixTransposeInverse(uMMatrix4)));
-  gl.uniform3f(gl.getUniformLocation(shaderProgram, "uColor"),0.5,0.5,0.0);
+  gl.uniform3f(gl.getUniformLocation(shaderProgram, "uColor"),0.0,0.0,0.0);
   gl.drawArrays(gl.TRIANGLES, 0, vertexPositionBuffer.numItems*vertexPositionBuffer.itemSize); //Faktyczne wywołanie rendrowania
 
-  //Piaty obiekt (druga reka)
+  //Piaty obiekt (lewa reka)
   gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "uMMatrix"), false, new Float32Array(uMMatrix5));
   gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "uInvMMatrix"), false, new Float32Array(MatrixTransposeInverse(uMMatrix5)));
-  gl.uniform3f(gl.getUniformLocation(shaderProgram, "uColor"),0.0,1.0,0.0);
+  gl.uniform3f(gl.getUniformLocation(shaderProgram, "uColor"),1.0,1.0,1.0);
   gl.drawArrays(gl.TRIANGLES, 0, vertexPositionBuffer.numItems*vertexPositionBuffer.itemSize); //Faktyczne wywołanie rendrowania
 
   // //Szosty obiekt (druga reka)
@@ -686,25 +686,25 @@ function Tick()
   //Siodmy obiekt (torso)
   gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "uMMatrix"), false, new Float32Array(uMMatrix7));
   gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "uInvMMatrix"), false, new Float32Array(MatrixTransposeInverse(uMMatrix7)));
-  gl.uniform3f(gl.getUniformLocation(shaderProgram, "uColor"),0.0,0.0,1.0);
+  gl.uniform3f(gl.getUniformLocation(shaderProgram, "uColor"),0.0,0.0,0.0);
   gl.drawArrays(gl.TRIANGLES, 0, vertexPositionBuffer.numItems*vertexPositionBuffer.itemSize); //Faktyczne wywołanie rendrowania
 
-  //Osmy obiekt (torso)
+  //Osmy obiekt (tulow)
   gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "uMMatrix"), false, new Float32Array(uMMatrix8));
   gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "uInvMMatrix"), false, new Float32Array(MatrixTransposeInverse(uMMatrix8)));
-  gl.uniform3f(gl.getUniformLocation(shaderProgram, "uColor"),.0,0.0,1.0);
+  gl.uniform3f(gl.getUniformLocation(shaderProgram, "uColor"),0.0,0.0,0.0);
   gl.drawArrays(gl.TRIANGLES, 0, vertexPositionBuffer.numItems*vertexPositionBuffer.itemSize); //Faktyczne wywołanie rendrowania
 
   //dziewiaty (noga1)
   gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "uMMatrix"), false, new Float32Array(uMMatrix9));
   gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "uInvMMatrix"), false, new Float32Array(MatrixTransposeInverse(uMMatrix9)));
-  gl.uniform3f(gl.getUniformLocation(shaderProgram, "uColor"),1.0,1.0,1.0);
+  gl.uniform3f(gl.getUniformLocation(shaderProgram, "uColor"),0.2,0.2,0.2);
   gl.drawArrays(gl.TRIANGLES, 0, vertexPositionBuffer.numItems*vertexPositionBuffer.itemSize); //Faktyczne wywołanie rendrowania
   
   //dziesiaty (noga1)
   gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "uMMatrix"), false, new Float32Array(uMMatrix10));
   gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "uInvMMatrix"), false, new Float32Array(MatrixTransposeInverse(uMMatrix10)));
-  gl.uniform3f(gl.getUniformLocation(shaderProgram, "uColor"),0.0,1.0,1.0);
+  gl.uniform3f(gl.getUniformLocation(shaderProgram, "uColor"),1.0,1.0,1.0);
   gl.drawArrays(gl.TRIANGLES, 0, vertexPositionBuffer.numItems*vertexPositionBuffer.itemSize); //Faktyczne wywołanie rendrowania
   setTimeout(Tick,100);
 
@@ -712,7 +712,7 @@ function Tick()
 
   gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "uMMatrix"), false, new Float32Array(uMMatrix11));
   gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "uInvMMatrix"), false, new Float32Array(MatrixTransposeInverse(uMMatrix11)));
-  gl.uniform3f(gl.getUniformLocation(shaderProgram, "uColor"),1.0,1.0,1.0);
+  gl.uniform3f(gl.getUniformLocation(shaderProgram, "uColor"),0.2,0.2,0.2);
   gl.drawArrays(gl.TRIANGLES, 0, vertexPositionBuffer.numItems*vertexPositionBuffer.itemSize); //Faktyczne wywołanie rendrowania
   setTimeout(Tick,100);
 
@@ -720,7 +720,7 @@ function Tick()
 
   gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "uMMatrix"), false, new Float32Array(uMMatrix12));
   gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "uInvMMatrix"), false, new Float32Array(MatrixTransposeInverse(uMMatrix12)));
-  gl.uniform3f(gl.getUniformLocation(shaderProgram, "uColor"),0.0,1.0,1.0);
+  gl.uniform3f(gl.getUniformLocation(shaderProgram, "uColor"),1.0,1.0,1.0);
   gl.drawArrays(gl.TRIANGLES, 0, vertexPositionBuffer.numItems*vertexPositionBuffer.itemSize); //Faktyczne wywołanie rendrowania
   setTimeout(Tick,100);
 
@@ -729,7 +729,7 @@ function Tick()
 
   gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "uMMatrix"), false, new Float32Array(uMMatrix13));
   gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "uInvMMatrix"), false, new Float32Array(MatrixTransposeInverse(uMMatrix13)));
-  gl.uniform3f(gl.getUniformLocation(shaderProgram, "uColor"),0.0,1.0,1.0);
+  gl.uniform3f(gl.getUniformLocation(shaderProgram, "uColor"),1.0,1.0,1.0);
   gl.drawArrays(gl.TRIANGLES, 0, vertexPositionBuffer.numItems*vertexPositionBuffer.itemSize); //Faktyczne wywołanie rendrowania
   setTimeout(Tick,100);
 }
